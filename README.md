@@ -148,7 +148,7 @@ Backups are automatically created via Celery tasks and old backups are cleaned u
 
 This project uses:
 - **Black** for code formatting
-- **isort** for import sorting  
+- **isort** for import sorting
 - **flake8** for linting
 
 Install pre-commit hooks:

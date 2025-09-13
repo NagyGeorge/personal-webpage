@@ -1,1 +1,2 @@
-from django.db import models
+# Django models for status app
+# No models defined yet

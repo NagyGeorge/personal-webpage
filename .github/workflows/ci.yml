@@ -77,6 +77,23 @@ jobs:
       env:
         PGPASSWORD: postgres
 
+    - name: Run Django migrations
+      env:
+        # Use individual DB_* environment variables that match Django settings
+        DJANGO_ENV: dev
+        DB_NAME: mysite
+        DB_USER: postgres
+        DB_PASS: postgres
+        DB_HOST: localhost
+        DB_PORT: 5432
+        REDIS_URL: redis://localhost:6379/0
+        SECRET_KEY: test-secret-key-for-ci
+        DEBUG: True
+      run: |
+        # Create all database tables by running migrations
+        python manage.py makemigrations
+        python manage.py migrate
+
     - name: Run tests
       env:
         # Use individual DB_* environment variables that match Django settings
@@ -90,7 +107,6 @@ jobs:
         SECRET_KEY: test-secret-key-for-ci
         DEBUG: True
       run: |
-        python manage.py migrate
         pytest
 
   build-and-push-image:

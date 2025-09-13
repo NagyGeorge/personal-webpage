@@ -59,7 +59,8 @@ class Command(BaseCommand):
 
         except FileNotFoundError:
             raise CommandError(
-                "pg_dump command not found. Make sure PostgreSQL client tools are installed."
+                "pg_dump command not found. Make sure PostgreSQL client "
+                "tools are installed."
             )
         except Exception as e:
             raise CommandError(f"Backup failed: {str(e)}")
