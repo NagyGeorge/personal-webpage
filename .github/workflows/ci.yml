@@ -86,6 +86,51 @@ jobs:
         python manage.py makemigrations
         python manage.py migrate
 
+    - name: Test static file collection
+      env:
+        DJANGO_ENV: dev
+        DB_NAME: mysite
+        DB_USER: postgres
+        DB_PASS: postgres
+        DB_HOST: localhost
+        DB_PORT: 5432
+        REDIS_URL: redis://localhost:6379/0
+        SECRET_KEY: test-secret-key-for-ci
+        DEBUG: False  # Test static files in production-like mode
+      run: |
+        # Test that static files can be collected successfully
+        python manage.py collectstatic --noinput --verbosity=2
+
+    - name: Validate Django templates
+      env:
+        DJANGO_ENV: dev
+        DB_NAME: mysite
+        DB_USER: postgres
+        DB_PASS: postgres
+        DB_HOST: localhost
+        DB_PORT: 5432
+        REDIS_URL: redis://localhost:6379/0
+        SECRET_KEY: test-secret-key-for-ci
+        DEBUG: True
+      run: |
+        # Check for template syntax errors
+        python -c "
+        import os
+        import django
+        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings.dev')
+        django.setup()
+        from django.template.loader import get_template
+        templates = ['base.html', 'home.html', 'about.html', 'projects.html', 'contact.html', 'blog/index.html', 'blog/detail.html', 'blog/_posts.html']
+        for template_name in templates:
+            try:
+                get_template(template_name)
+                print(f'✓ Template {template_name} is valid')
+            except Exception as e:
+                print(f'✗ Template {template_name} has errors: {e}')
+                exit(1)
+        print('All templates validated successfully')
+        "
+
     - name: Run tests
       env:
         # Use individual DB_* environment variables that match Django settings

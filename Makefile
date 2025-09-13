@@ -25,6 +25,18 @@ createsuperuser:
 test:
 	pytest
 
+test-frontend:
+	pytest -m frontend
+
+test-htmx:
+	pytest -m htmx
+
+test-integration:
+	pytest -m integration
+
+test-coverage:
+	pytest --cov=. --cov-report=html --cov-report=term-missing
+
 lint:
 	black --check .
 	isort --check-only .
