@@ -39,13 +39,16 @@ docker-logs:
 	docker-compose logs -f
 
 backup:
-	python manage.py backup_db
+	python manage.py shell -c "from apps.core.tasks import backup_db; backup_db.delay()"
 
 celery-worker:
 	celery -A mysite worker --loglevel=info
 
 celery-beat:
 	celery -A mysite beat --loglevel=info
+
+celery-flower:
+	celery -A mysite flower --basic-auth=${FLOWER_USER:-admin}:${FLOWER_PASS:-admin}
 
 shell:
 	python manage.py shell

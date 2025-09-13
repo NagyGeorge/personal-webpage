@@ -1,31 +1,45 @@
-from django.http import JsonResponse
-from django.db import connections
+import logging
+
 from django.core.cache import cache
-import redis
+from django.db import connection
+from django.http import JsonResponse
+
+logger = logging.getLogger(__name__)
 
 
 def healthz(request):
-    """Health check endpoint"""
-    status = {'status': 'healthy', 'checks': {}}
-    
+    """Health check endpoint - returns 200 only if DB and Redis are reachable"""
+    status = {"status": "healthy", "checks": {}}
+    is_healthy = True
+
+    # Check database
     try:
-        from django.db import connection
-        connection.ensure_connection()
-        status['checks']['database'] = 'ok'
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT 1")
+        status["checks"]["database"] = "ok"
+        logger.debug("Database health check passed")
     except Exception as e:
-        status['checks']['database'] = f'error: {str(e)}'
-        status['status'] = 'unhealthy'
-    
+        status["checks"]["database"] = f"error: {str(e)}"
+        is_healthy = False
+        logger.error(f"Database health check failed: {str(e)}")
+
+    # Check Redis
     try:
-        cache.set('health_check', 'ok', 60)
-        if cache.get('health_check') == 'ok':
-            status['checks']['redis'] = 'ok'
+        cache.set("health_check", "ok", 60)
+        if cache.get("health_check") == "ok":
+            status["checks"]["redis"] = "ok"
+            logger.debug("Redis health check passed")
         else:
-            status['checks']['redis'] = 'error: cache test failed'
-            status['status'] = 'unhealthy'
+            status["checks"]["redis"] = "error: cache test failed"
+            is_healthy = False
+            logger.error("Redis health check failed: cache test failed")
     except Exception as e:
-        status['checks']['redis'] = f'error: {str(e)}'
-        status['status'] = 'unhealthy'
-    
-    response_status = 200 if status['status'] == 'healthy' else 503
+        status["checks"]["redis"] = f"error: {str(e)}"
+        is_healthy = False
+        logger.error(f"Redis health check failed: {str(e)}")
+
+    if not is_healthy:
+        status["status"] = "unhealthy"
+
+    response_status = 200 if is_healthy else 503
     return JsonResponse(status, status=response_status)
