@@ -9,7 +9,7 @@ def add_mysite_project(apps, schema_editor):
         title='Django Portfolio & Blog Platform',
         defaults={
             'description': 'A full-stack Django web application featuring a personal blog, project portfolio, and health monitoring. Built with modern deployment practices including Docker, CI/CD pipelines, and Railway hosting. Technologies: Django, PostgreSQL, Redis, Celery, Docker, HTMX, Tailwind CSS, GitHub Actions.',
-            'link': 'https://my-site-production.up.railway.app/',
+            'link': 'https://my-site-production-ff5c.up.railway.app/',
             'featured': True,
         }
     )
