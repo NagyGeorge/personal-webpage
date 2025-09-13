@@ -13,6 +13,8 @@ while ! timeout 1 bash -c "echo > /dev/tcp/redis/6379" 2>/dev/null; do
 done
 echo "Redis started"
 
+echo "Creating migrations..."
+python manage.py makemigrations
 echo "Running migrations..."
 python manage.py migrate
 
