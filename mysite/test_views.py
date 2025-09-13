@@ -52,7 +52,7 @@ class FrontendViewTests(TestCase):
         response = self.client.get(reverse("about"))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "About Me")
-        self.assertContains(response, "full-stack developer")
+        self.assertContains(response, "conductor for a Class 1 freight railway")
 
     def test_projects_page_loads(self):
         """Test that projects page loads and shows projects"""
