@@ -72,6 +72,7 @@ jobs:
     - name: Run Django migrations
       env:
         # Use individual DB_* environment variables that match Django settings
+        DJANGO_SETTINGS_MODULE: mysite.settings.dev
         DJANGO_ENV: dev
         DB_NAME: mysite
         DB_USER: postgres
@@ -89,6 +90,7 @@ jobs:
 
     - name: Test static file collection
       env:
+        DJANGO_SETTINGS_MODULE: mysite.settings.dev
         DJANGO_ENV: dev
         DB_NAME: mysite
         DB_USER: postgres
@@ -105,6 +107,7 @@ jobs:
 
     - name: Validate Django templates
       env:
+        DJANGO_SETTINGS_MODULE: mysite.settings.dev
         DJANGO_ENV: dev
         DB_NAME: mysite
         DB_USER: postgres
@@ -137,6 +140,7 @@ jobs:
     - name: Run tests
       env:
         # Use individual DB_* environment variables that match Django settings
+        DJANGO_SETTINGS_MODULE: mysite.settings.dev
         DJANGO_ENV: dev
         DB_NAME: mysite
         DB_USER: postgres
