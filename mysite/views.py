@@ -4,9 +4,9 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 
-from apps.blog.models import Post
 from apps.core.tasks import send_contact_email
-from apps.portfolio.models import Project
+from blog.models import Post
+from portfolio.models import Project
 
 
 def home(request):

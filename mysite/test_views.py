@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 from django.test import Client, TestCase
 from django.urls import reverse
 
-from apps.blog.models import Post, Tag
-from apps.portfolio.models import Project
+from blog.models import Post, Tag
+from portfolio.models import Project
 
 
 class FrontendViewTests(TestCase):

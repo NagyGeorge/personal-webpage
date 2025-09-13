@@ -7,8 +7,8 @@ from django.template.loader import render_to_string
 from django.test import Client, RequestFactory, TestCase
 from django.urls import reverse
 
-from apps.blog.models import Post, Tag
-from apps.portfolio.models import Project
+from blog.models import Post, Tag
+from portfolio.models import Project
 
 
 @pytest.mark.integration
