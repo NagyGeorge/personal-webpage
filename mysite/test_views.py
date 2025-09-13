@@ -29,8 +29,7 @@ class FrontendViewTests(TestCase):
         self.project = Project.objects.create(
             title="Test Project",
             description="A test project",
-            live_url="https://example.com",
-            github_url="https://github.com/test/project",
+            link="https://example.com",
         )
 
     def test_home_page_loads(self):

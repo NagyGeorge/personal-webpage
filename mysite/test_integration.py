@@ -31,7 +31,6 @@ class HTMXIntegrationTests(TestCase):
                     f"Content for test post {i}. "
                     "This is a longer content to test excerpt functionality."
                 ),
-                excerpt=f"Excerpt for post {i}",
                 published=True,
             )
             self.posts.append(post)
@@ -149,7 +148,7 @@ class TemplateIntegrationTests(TestCase):
             slug="test-post",
             author=self.user,
             body="Test content",
-            status="published",
+            published=True,
         )
         post.tags.add(tag)
 
@@ -168,7 +167,7 @@ class TemplateIntegrationTests(TestCase):
         # Test empty state
         response = self.client.get(reverse("home"))
         self.assertContains(response, "No blog posts yet")
-        self.assertContains(response, "No projects yet")
+        self.assertContains(response, "No projects yet.")
 
         # Create content and test populated state
         post = Post.objects.create(
@@ -176,7 +175,7 @@ class TemplateIntegrationTests(TestCase):
             slug="test-post",
             author=self.user,
             body="Test content",
-            status="published",
+            published=True,
         )
 
         response = self.client.get(reverse("home"))
@@ -260,7 +259,7 @@ class EndToEndNavigationTests(TestCase):
             slug="sample-post",
             author=self.user,
             body="Sample content",
-            status="published",
+            published=True,
         )
 
     def test_complete_site_navigation(self):
