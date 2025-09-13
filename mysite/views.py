@@ -30,6 +30,12 @@ def projects(request):
     return render(request, "projects.html", context)
 
 
+def project_detail(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    context = {"project": project}
+    return render(request, "projects/detail.html", context)
+
+
 def blog_index(request):
     posts_list = Post.objects.filter(published=True).order_by("-created_at")
     paginator = Paginator(posts_list, 10)
