@@ -1,0 +1,60 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "my-site"
+version = "0.1.0"
+description = "Django project with blog, portfolio, and status apps"
+authors = [{name = "Your Name", email = "your.email@example.com"}]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "Django==5.0.6",
+    "djangorestframework==3.15.1",
+    "django-filter==24.2",
+    "psycopg2-binary==2.9.9",
+    "redis==5.0.4",
+    "django-redis==5.4.0",
+    "celery==5.3.6",
+    "django-prometheus==2.3.1",
+    "Pillow==10.3.0",
+    "python-dotenv==1.0.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "isort",
+    "flake8",
+    "pre-commit",
+    "pytest",
+    "pytest-django",
+    "pytest-cov",
+]
+
+[tool.black]
+line-length = 88
+target-version = ['py312']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  migrations/
+)/
+'''
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 88
+skip = ["migrations"]
+
+[tool.flake8]
+max-line-length = 88
+exclude = ["migrations", "__pycache__", "venv", ".venv"]
+extend-ignore = ["E203", "W503"]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "mysite.settings"
+python_files = ["tests.py", "test_*.py", "*_tests.py"]
