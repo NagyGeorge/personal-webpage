@@ -22,8 +22,7 @@ class FrontendViewTests(TestCase):
             slug="test-post",
             author=self.user,
             body="This is a test post content",
-            excerpt="Test excerpt",
-            status="published",
+            published=True,
         )
         self.post.tags.add(self.tag)
 
@@ -94,7 +93,7 @@ class FrontendViewTests(TestCase):
             slug="draft-post",
             author=self.user,
             body="Draft content",
-            status="draft",
+            published=False,
         )
         response = self.client.get(
             reverse("blog_detail", kwargs={"slug": draft_post.slug})
@@ -185,7 +184,7 @@ class HTMXViewTests(TestCase):
                 slug=f"test-post-{i}",
                 author=self.user,
                 body=f"Content for post {i}",
-                status="published",
+                published=True,
             )
 
     def test_blog_index_regular_request(self):

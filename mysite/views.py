@@ -10,7 +10,7 @@ from portfolio.models import Project
 
 
 def home(request):
-    latest_posts = Post.objects.filter(status="published").order_by("-created_at")[:3]
+    latest_posts = Post.objects.filter(published=True).order_by("-created_at")[:3]
     latest_projects = Project.objects.order_by("-id")[:6]
 
     context = {
@@ -31,7 +31,7 @@ def projects(request):
 
 
 def blog_index(request):
-    posts_list = Post.objects.filter(status="published").order_by("-created_at")
+    posts_list = Post.objects.filter(published=True).order_by("-created_at")
     paginator = Paginator(posts_list, 10)
 
     page_number = request.GET.get("page", 1)
@@ -46,7 +46,7 @@ def blog_index(request):
 
 
 def blog_detail(request, slug):
-    post = get_object_or_404(Post, slug=slug, status="published")
+    post = get_object_or_404(Post, slug=slug, published=True)
     context = {"post": post}
     return render(request, "blog/detail.html", context)
 

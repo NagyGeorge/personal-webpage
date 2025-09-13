@@ -32,7 +32,7 @@ class HTMXIntegrationTests(TestCase):
                     "This is a longer content to test excerpt functionality."
                 ),
                 excerpt=f"Excerpt for post {i}",
-                status="published",
+                published=True,
             )
             self.posts.append(post)
 
