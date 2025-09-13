@@ -1,4 +1,4 @@
-.PHONY: run migrate createsuperuser test lint install dev-install docker-up docker-down
+.PHONY: run migrate createsuperuser test lint install dev-install setup docker-up docker-down
 
 install:
 	pip install -r requirements.txt
@@ -6,6 +6,11 @@ install:
 dev-install:
 	pip install -r requirements.txt
 	pip install black isort flake8 pre-commit pytest pytest-django pytest-cov
+
+setup: dev-install
+	pre-commit install
+	@echo "Development environment setup complete!"
+	@echo "Pre-commit hooks installed - they will run automatically on commits"
 
 run:
 	python manage.py runserver

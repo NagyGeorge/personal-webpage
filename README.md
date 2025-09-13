@@ -157,6 +157,11 @@ pip install pre-commit
 pre-commit install
 ```
 
+**Important**: Pre-commit hooks are required and will run automatically on every commit. They will prevent commits that don't pass formatting and linting checks. To run manually:
+```bash
+pre-commit run --all-files
+```
+
 ### Testing
 
 Run tests with pytest:
