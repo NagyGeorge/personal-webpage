@@ -32,6 +32,9 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
+        else:
+            # Ensure existing slug is properly sanitized
+            self.slug = slugify(self.slug)
         super().save(*args, **kwargs)
 
     def __str__(self):

@@ -24,8 +24,8 @@ class HTMXIntegrationTests(TestCase):
         self.posts = []
         for i in range(25):  # Create enough posts for multiple pages
             post = Post.objects.create(
-                title=f"Test Post {i: 02d}",
-                slug=f"test-post-{i: 02d}",
+                title=f"Test Post {i:02d}",
+                slug=f"test-post-{i:02d}",
                 author=self.user,
                 body=(
                     f"Content for test post {i}. "
