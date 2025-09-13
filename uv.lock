@@ -231,6 +231,16 @@ wheels = [
 ]
 
 [[package]]
+name = "django-allauth"
+version = "65.11.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "asgiref" },
+    { name = "django" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/b7/19/3671e67b5fcc744c0d9380b0bb6120b7226bc9944bd9affb029b2d510d53/django_allauth-65.11.2.tar.gz", hash = "sha256:7b7e771d3384d0e247d0d6aef31b0cb589f92305b7e975e70056a513525906e7", size = 1916225, upload-time = "2025-09-09T18:37:19.55Z" }
+
+[[package]]
 name = "django-filter"
 version = "24.2"
 source = { registry = "https://pypi.org/simple" }
@@ -265,6 +275,15 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/83/9d/2272742fdd9d0a9f0b28cd995b0539430c9467a2192e4de2cea9ea6ad38c/django-redis-5.4.0.tar.gz", hash = "sha256:6a02abaa34b0fea8bf9b707d2c363ab6adc7409950b2db93602e6cb292818c42", size = 52567, upload-time = "2023-10-01T20:22:01.221Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/b7/f1/63caad7c9222c26a62082f4f777de26389233b7574629996098bf6d25a4d/django_redis-5.4.0-py3-none-any.whl", hash = "sha256:ebc88df7da810732e2af9987f7f426c96204bf89319df4c6da6ca9a2942edd5b", size = 31119, upload-time = "2023-10-01T20:21:33.009Z" },
+]
+
+[[package]]
+name = "django-widget-tweaks"
+version = "1.5.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/a5/fe/26eb92fba83844e71bbec0ced7fc2e843e5990020e3cc676925204031654/django-widget-tweaks-1.5.0.tar.gz", hash = "sha256:1c2180681ebb994e922c754804c7ffebbe1245014777ac47897a81f57cc629c7", size = 14767, upload-time = "2023-08-25T15:29:12.778Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/46/6a/6cb6deb5c38b785c77c3ba66f53051eada49205979c407323eb666930915/django_widget_tweaks-1.5.0-py3-none-any.whl", hash = "sha256:a41b7b2f05bd44d673d11ebd6c09a96f1d013ee98121cb98c384fe84e33b881e", size = 8960, upload-time = "2023-08-25T15:29:05.644Z" },
 ]
 
 [[package]]
@@ -360,9 +379,11 @@ source = { editable = "." }
 dependencies = [
     { name = "celery" },
     { name = "django" },
+    { name = "django-allauth" },
     { name = "django-filter" },
     { name = "django-prometheus" },
     { name = "django-redis" },
+    { name = "django-widget-tweaks" },
     { name = "djangorestframework" },
     { name = "pillow" },
     { name = "psycopg2-binary" },
@@ -386,9 +407,11 @@ requires-dist = [
     { name = "black", marker = "extra == 'dev'" },
     { name = "celery", specifier = "==5.3.6" },
     { name = "django", specifier = "==5.0.6" },
+    { name = "django-allauth", specifier = ">=65.11.2" },
     { name = "django-filter", specifier = "==24.2" },
     { name = "django-prometheus", specifier = "==2.3.1" },
     { name = "django-redis", specifier = "==5.4.0" },
+    { name = "django-widget-tweaks", specifier = ">=1.5.0" },
     { name = "djangorestframework", specifier = "==3.15.1" },
     { name = "flake8", marker = "extra == 'dev'" },
     { name = "isort", marker = "extra == 'dev'" },

@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - My Site{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
+        <div class="text-sm text-gray-600">
+            Welcome, {{ user.first_name|default:user.email }}
+        </div>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <!-- Blog Stats -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <div class="text-sm font-medium text-gray-500 uppercase tracking-wide">Total Posts</div>
+            <div class="mt-2 text-3xl font-bold text-gray-900">{{ total_posts }}</div>
+            <div class="mt-2 text-sm text-gray-600">
+                {{ published_posts }} published, {{ draft_posts }} drafts
+            </div>
+        </div>
+
+        <!-- Project Stats -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <div class="text-sm font-medium text-gray-500 uppercase tracking-wide">Total Projects</div>
+            <div class="mt-2 text-3xl font-bold text-gray-900">{{ total_projects }}</div>
+            <div class="mt-2 text-sm text-gray-600">
+                {{ featured_projects }} featured
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <div class="text-sm font-medium text-gray-500 uppercase tracking-wide">Quick Actions</div>
+            <div class="mt-4 space-y-2">
+                <a href="#" class="block text-blue-600 hover:text-blue-800 text-sm">+ New Project</a>
+                <a href="#" class="block text-blue-600 hover:text-blue-800 text-sm">+ New Blog Post</a>
+            </div>
+        </div>
+
+        <!-- System Info -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <div class="text-sm font-medium text-gray-500 uppercase tracking-wide">System</div>
+            <div class="mt-2 text-sm text-gray-600">
+                <div>Django Admin Available</div>
+                <div class="mt-2">
+                    <a href="/admin/" class="text-blue-600 hover:text-blue-800">Open Django Admin</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Content -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Recent Posts -->
+        <div class="bg-white rounded-lg shadow">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h2 class="text-lg font-semibold text-gray-900">Recent Blog Posts</h2>
+            </div>
+            <div class="divide-y divide-gray-200">
+                {% for post in recent_posts %}
+                    <div class="px-6 py-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="text-sm font-medium text-gray-900">{{ post.title }}</h3>
+                                <p class="text-sm text-gray-500">{{ post.created_at|date:"M d, Y" }}</p>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                {% if post.published %}
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        Published
+                                    </span>
+                                {% else %}
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                        Draft
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="px-6 py-4 text-gray-500 text-sm">No blog posts yet</div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Recent Projects -->
+        <div class="bg-white rounded-lg shadow">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h2 class="text-lg font-semibold text-gray-900">Recent Projects</h2>
+            </div>
+            <div class="divide-y divide-gray-200">
+                {% for project in recent_projects %}
+                    <div class="px-6 py-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="text-sm font-medium text-gray-900">{{ project.title }}</h3>
+                                <p class="text-sm text-gray-500">{{ project.created_at|date:"M d, Y" }}</p>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                {% if project.featured %}
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                        Featured
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="px-6 py-4 text-gray-500 text-sm">No projects yet</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -13,12 +13,30 @@
         <div class="max-w-4xl mx-auto px-4 py-4">
             <div class="flex justify-between items-center">
                 <a href="{% url 'home' %}" class="text-xl font-bold text-blue-600">My Site</a>
-                <div class="space-x-6">
+                <div class="flex items-center space-x-6">
                     <a href="{% url 'home' %}" class="hover:text-blue-600">Home</a>
                     <a href="{% url 'about' %}" class="hover:text-blue-600">About</a>
                     <a href="{% url 'projects' %}" class="hover:text-blue-600">Projects</a>
                     <a href="{% url 'blog_index' %}" class="hover:text-blue-600">Blog</a>
                     <a href="{% url 'contact' %}" class="hover:text-blue-600">Contact</a>
+
+                    {% load socialaccount %}
+                    {% if user.is_authenticated and user.email == ALLOWED_ADMIN_EMAIL %}
+                        <div class="border-l border-gray-300 pl-6 ml-6">
+                            <a href="{% url 'admin_dashboard:dashboard' %}" class="text-blue-600 hover:text-blue-800 font-medium">
+                                Admin
+                            </a>
+                            <a href="{% url 'account_logout' %}" class="ml-4 text-gray-600 hover:text-gray-800">
+                                Logout
+                            </a>
+                        </div>
+                    {% elif not user.is_authenticated %}
+                        <div class="border-l border-gray-300 pl-6 ml-6">
+                            <a href="/accounts/google/login/" class="text-gray-600 hover:text-blue-600">
+                                Login
+                            </a>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

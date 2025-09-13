@@ -37,6 +37,11 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "corsheaders",
     "django_celery_beat",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
+    "widget_tweaks",
 ]
 
 LOCAL_APPS = [
@@ -44,6 +49,7 @@ LOCAL_APPS = [
     "blog",
     "portfolio",
     "status",
+    "admin_dashboard",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -58,6 +64,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "mysite.urls"
@@ -73,6 +80,9 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "allauth.account.context_processors.account",
+                "allauth.socialaccount.context_processors.socialaccount",
+                "admin_dashboard.context_processors.admin_settings",
             ],
         },
     },
@@ -224,3 +234,46 @@ LOGGING = {
         "level": "WARNING",
     },
 }
+
+# Authentication Backends
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+
+# Allauth Configuration
+SITE_ID = 1
+
+# Account settings
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
+ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 300
+ACCOUNT_LOGOUT_ON_PASSWORD_CHANGE = False
+
+# Login/logout redirects
+LOGIN_REDIRECT_URL = "/dashboard/"
+LOGOUT_REDIRECT_URL = "/"
+
+# Social account settings
+SOCIALACCOUNT_AUTO_SIGNUP = True
+SOCIALACCOUNT_EMAIL_REQUIRED = True
+SOCIALACCOUNT_EMAIL_VERIFICATION = "none"
+
+# Google OAuth Provider Configuration
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "SCOPE": [
+            "profile",
+            "email",
+        ],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
+        "OAUTH_PKCE_ENABLED": True,
+    }
+}
+
+# Admin access control - only this email can access admin features
+ALLOWED_ADMIN_EMAIL = os.environ.get("ALLOWED_ADMIN_EMAIL", "")
