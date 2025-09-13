@@ -1,5 +1,5 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
 from django.utils.text import slugify
 
 
@@ -16,7 +16,7 @@ class Tag(models.Model):
         return self.name
 
     class Meta:
-        ordering = ['name']
+        ordering = ["name"]
 
 
 class Post(models.Model):
@@ -38,4 +38,4 @@ class Post(models.Model):
         return self.title
 
     class Meta:
-        ordering = ['-created_at']
+        ordering = ["-created_at"]

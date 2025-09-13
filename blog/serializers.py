@@ -1,11 +1,12 @@
 from rest_framework import serializers
+
 from .models import Post, Tag
 
 
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
-        fields = ['id', 'name', 'slug']
+        fields = ["id", "name", "slug"]
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -14,4 +15,13 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ['id', 'title', 'slug', 'body', 'tags', 'author', 'created_at', 'updated_at']
+        fields = [
+            "id",
+            "title",
+            "slug",
+            "body",
+            "tags",
+            "author",
+            "created_at",
+            "updated_at",
+        ]
