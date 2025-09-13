@@ -26,9 +26,7 @@ def remove_mysite_project(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-    dependencies = [
-        ('portfolio', '0001_initial'),
-    ]
+    dependencies = []
 
     operations = [
         migrations.RunPython(
