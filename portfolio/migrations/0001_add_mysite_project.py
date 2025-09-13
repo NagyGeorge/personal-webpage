@@ -8,10 +8,9 @@ def add_mysite_project(apps, schema_editor):
     Project.objects.get_or_create(
         title='Django Portfolio & Blog Platform',
         defaults={
-            'description': 'A full-stack Django web application featuring a personal blog, project portfolio, and health monitoring. Built with modern deployment practices including Docker, CI/CD pipelines, and Railway hosting.',
-            'technologies': 'Django, PostgreSQL, Redis, Celery, Docker, HTMX, Tailwind CSS, GitHub Actions',
-            'github_url': 'https://github.com/georgehogarth/my-site',
-            'live_url': 'https://my-site-production.up.railway.app/',
+            'description': 'A full-stack Django web application featuring a personal blog, project portfolio, and health monitoring. Built with modern deployment practices including Docker, CI/CD pipelines, and Railway hosting. Technologies: Django, PostgreSQL, Redis, Celery, Docker, HTMX, Tailwind CSS, GitHub Actions.',
+            'link': 'https://my-site-production.up.railway.app/',
+            'featured': True,
         }
     )
 
