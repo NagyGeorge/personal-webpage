@@ -20,7 +20,7 @@ jobs:
         env:
           POSTGRES_PASSWORD: postgres
           POSTGRES_USER: postgres
-          POSTGRES_DB: test_mysite
+          # Don't create a specific database - we'll create "mysite" manually
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -47,7 +47,13 @@ jobs:
       with:
         python-version: '3.12'
 
-    - name: Install dependencies
+    - name: Install system dependencies
+      run: |
+        # Install PostgreSQL client for database creation
+        sudo apt-get update
+        sudo apt-get install -y postgresql-client
+
+    - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
@@ -64,11 +70,24 @@ jobs:
     - name: Check imports with isort
       run: isort --check-only .
 
+    - name: Create mysite database
+      run: |
+        # Wait for PostgreSQL to be ready and create the mysite database
+        PGPASSWORD=postgres psql -h localhost -U postgres -c "CREATE DATABASE mysite;"
+      env:
+        PGPASSWORD: postgres
+
     - name: Run tests
       env:
-        DATABASE_URL: postgres://postgres:postgres@localhost:5432/test_mysite
+        # Use individual DB_* environment variables that match Django settings
+        DJANGO_ENV: dev
+        DB_NAME: mysite
+        DB_USER: postgres
+        DB_PASS: postgres
+        DB_HOST: localhost
+        DB_PORT: 5432
         REDIS_URL: redis://localhost:6379/0
-        SECRET_KEY: test-secret-key
+        SECRET_KEY: test-secret-key-for-ci
         DEBUG: True
       run: |
         python manage.py migrate
