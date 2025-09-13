@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Home - My Site{% endblock %}
+
+{% block content %}
+<div class="text-center mb-12">
+    <h1 class="text-4xl font-bold mb-4">Welcome to My Site</h1>
+    <p class="text-xl text-gray-600">Full-stack developer showcasing projects and sharing insights</p>
+</div>
+
+<div class="grid md:grid-cols-2 gap-12">
+    <section>
+        <h2 class="text-2xl font-bold mb-6">Latest Blog Posts</h2>
+        {% if latest_posts %}
+            <div class="space-y-4">
+                {% for post in latest_posts %}
+                    <article class="border-b pb-4">
+                        <h3 class="text-lg font-semibold">
+                            <a href="{% url 'blog_detail' post.slug %}" class="hover:text-blue-600">
+                                {{ post.title }}
+                            </a>
+                        </h3>
+                        <p class="text-gray-600 text-sm">{{ post.created_at|date:"M d, Y" }}</p>
+                        <p class="text-gray-700 mt-2">{{ post.excerpt|default:post.body|truncatewords:20 }}</p>
+                    </article>
+                {% endfor %}
+            </div>
+            <div class="mt-6">
+                <a href="{% url 'blog_index' %}" class="text-blue-600 hover:underline">View all posts →</a>
+            </div>
+        {% else %}
+            <p class="text-gray-600">No blog posts yet.</p>
+        {% endif %}
+    </section>
+
+    <section>
+        <h2 class="text-2xl font-bold mb-6">Latest Projects</h2>
+        {% if latest_projects %}
+            <div class="grid grid-cols-2 gap-4">
+                {% for project in latest_projects %}
+                    <div class="border rounded-lg p-4">
+                        <h3 class="font-semibold text-sm">{{ project.title }}</h3>
+                        <p class="text-gray-600 text-xs mt-1">{{ project.description|truncatewords:10 }}</p>
+                        {% if project.live_url %}
+                            <a href="{{ project.live_url }}" class="text-blue-600 text-xs hover:underline">View →</a>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="mt-6">
+                <a href="{% url 'projects' %}" class="text-blue-600 hover:underline">View all projects →</a>
+            </div>
+        {% else %}
+            <p class="text-gray-600">No projects yet.</p>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}

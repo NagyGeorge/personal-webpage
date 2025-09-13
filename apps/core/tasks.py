@@ -80,6 +80,27 @@ def backup_db():
         return error_msg
 
 
+@shared_task
+def send_contact_email(name, email, message):
+    """Send contact form email (placeholder implementation)."""
+    # In development, this will just log the message
+    # In production, you would send an actual email
+
+    logger.info(f"Contact form submission from {name} ({email}): {message}")
+
+    # You can implement actual email sending here using Django's email backend
+    # from django.core.mail import send_mail
+    # send_mail(
+    #     subject=f"Contact form from {name}",
+    #     message=message,
+    #     from_email=settings.DEFAULT_FROM_EMAIL,
+    #     recipient_list=[settings.CONTACT_EMAIL],
+    #     fail_silently=False,
+    # )
+
+    return True
+
+
 def upload_to_s3(backup_path):
     """Upload backup to S3 if MEDIA_BACKEND=s3 is configured"""
     if os.environ.get("MEDIA_BACKEND") != "s3":

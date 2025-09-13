@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Blog - My Site{% endblock %}
+
+{% block content %}
+<h1 class="text-3xl font-bold mb-8">Blog</h1>
+
+<div id="posts-container">
+    {% include "blog/_posts.html" %}
+</div>
+
+{% if page_obj.has_next %}
+    <div class="text-center mt-8">
+        <button
+            hx-get="{% url 'blog_index' %}?page={{ page_obj.next_page_number }}"
+            hx-target="#posts-container"
+            hx-swap="beforeend"
+            class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
+            Load More Posts
+        </button>
+    </div>
+{% endif %}
+{% endblock %}

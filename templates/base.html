@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Site{% endblock %}</title>
+    <link rel="stylesheet" href="/static/site.css">
+    <script src="https://unpkg.com/htmx.org@1.9.12" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-900">
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-4xl mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <a href="{% url 'home' %}" class="text-xl font-bold text-blue-600">My Site</a>
+                <div class="space-x-6">
+                    <a href="{% url 'home' %}" class="hover:text-blue-600">Home</a>
+                    <a href="{% url 'about' %}" class="hover:text-blue-600">About</a>
+                    <a href="{% url 'projects' %}" class="hover:text-blue-600">Projects</a>
+                    <a href="{% url 'blog_index' %}" class="hover:text-blue-600">Blog</a>
+                    <a href="{% url 'contact' %}" class="hover:text-blue-600">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-4 py-8">
+        {% if messages %}
+            <div class="mb-6">
+                {% for message in messages %}
+                    <div class="p-4 rounded {% if message.tags == 'error' %}bg-red-100 text-red-700{% else %}bg-green-100 text-green-700{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="bg-white border-t mt-16">
+        <div class="max-w-4xl mx-auto px-4 py-8 text-center text-gray-600">
+            <p>&copy; {% now "Y" %} My Site. Built with Django.</p>
+        </div>
+    </footer>
+</body>
+</html>

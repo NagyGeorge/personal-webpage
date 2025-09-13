@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}About - My Site{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl">
+    <h1 class="text-3xl font-bold mb-6">About Me</h1>
+
+    <div class="prose prose-gray max-w-none">
+        <p class="text-lg mb-4">
+            Hi, I'm a full-stack developer passionate about building scalable web applications
+            and sharing knowledge through writing.
+        </p>
+
+        <p class="mb-4">
+            This site showcases my projects and serves as a platform for documenting my
+            learning journey in software development. I work primarily with Python, Django,
+            JavaScript, and modern web technologies.
+        </p>
+
+        <p class="mb-6">
+            When I'm not coding, you can find me exploring new technologies, contributing to
+            open source projects, or writing about development best practices.
+        </p>
+
+        <h2 class="text-xl font-semibold mb-3">Skills</h2>
+        <ul class="list-disc list-inside mb-6 space-y-1">
+            <li>Python & Django</li>
+            <li>JavaScript & TypeScript</li>
+            <li>PostgreSQL & Redis</li>
+            <li>Docker & Container Orchestration</li>
+            <li>CI/CD & DevOps</li>
+            <li>REST API Development</li>
+        </ul>
+
+        <p>
+            Feel free to <a href="{% url 'contact' %}" class="text-blue-600 hover:underline">get in touch</a>
+            if you'd like to collaborate or just say hello!
+        </p>
+    </div>
+</div>
+{% endblock %}
