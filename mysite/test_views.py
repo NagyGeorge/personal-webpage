@@ -1,15 +1,22 @@
 from unittest.mock import MagicMock, patch
 
-from django.contrib.auth.models import User
 from django.test import Client, TestCase
 from django.urls import reverse
-
-from blog.models import Post, Tag
-from portfolio.models import Project
 
 
 class FrontendViewTests(TestCase):
     def setUp(self):
+        from django.contrib.auth.models import User
+
+        from blog.models import Post, Tag
+        from portfolio.models import Project
+
+        # Store model classes for use in methods
+        self.User = User
+        self.Post = Post
+        self.Tag = Tag
+        self.Project = Project
+
         self.client = Client()
         self.user = User.objects.create_user(
             username="testuser", email="test@example.com", password="testpass123"
@@ -87,6 +94,8 @@ class FrontendViewTests(TestCase):
 
     def test_blog_detail_404_for_draft_post(self):
         """Test that draft posts are not accessible"""
+        from blog.models import Post
+
         draft_post = Post.objects.create(
             title="Draft Post",
             slug="draft-post",
@@ -171,6 +180,10 @@ class FrontendViewTests(TestCase):
 
 class HTMXViewTests(TestCase):
     def setUp(self):
+        from django.contrib.auth.models import User
+
+        from blog.models import Post
+
         self.client = Client()
         self.user = User.objects.create_user(
             username="testuser", email="test@example.com", password="testpass123"

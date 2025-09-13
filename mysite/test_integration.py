@@ -1,19 +1,20 @@
 from unittest.mock import MagicMock, patch
 
 import pytest
-from django.contrib.auth.models import User
 from django.template import Context, RequestContext
 from django.template.loader import render_to_string
 from django.test import Client, RequestFactory, TestCase
 from django.urls import reverse
 
-from blog.models import Post, Tag
-from portfolio.models import Project
-
 
 @pytest.mark.integration
 class HTMXIntegrationTests(TestCase):
     def setUp(self):
+        from django.contrib.auth.models import User
+
+        from blog.models import Post, Tag
+        from portfolio.models import Project
+
         self.client = Client()
         self.factory = RequestFactory()
         self.user = User.objects.create_user(
@@ -101,6 +102,11 @@ class HTMXIntegrationTests(TestCase):
 @pytest.mark.frontend
 class TemplateIntegrationTests(TestCase):
     def setUp(self):
+        from django.contrib.auth.models import User
+
+        from blog.models import Post, Tag
+        from portfolio.models import Project
+
         self.client = Client()
         self.user = User.objects.create_user(
             username="testuser", email="test@example.com", password="testpass123"
@@ -141,6 +147,9 @@ class TemplateIntegrationTests(TestCase):
 
     def test_template_context_variables(self):
         """Test that context variables are properly passed to templates"""
+        from blog.models import Post, Tag
+        from portfolio.models import Project
+
         # Create test data
         tag = Tag.objects.create(name="Test Tag", slug="test-tag")
         post = Post.objects.create(
@@ -164,6 +173,8 @@ class TemplateIntegrationTests(TestCase):
 
     def test_template_conditional_rendering(self):
         """Test conditional rendering in templates"""
+        from blog.models import Post
+
         # Test empty state
         response = self.client.get(reverse("home"))
         self.assertContains(response, "No blog posts yet")
@@ -248,6 +259,11 @@ class ContactFormIntegrationTests(TestCase):
 @pytest.mark.integration
 class EndToEndNavigationTests(TestCase):
     def setUp(self):
+        from django.contrib.auth.models import User
+
+        from blog.models import Post, Tag
+        from portfolio.models import Project
+
         self.client = Client()
         self.user = User.objects.create_user(
             username="testuser", email="test@example.com", password="testpass123"
