@@ -5,9 +5,9 @@ from . import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/blog/", include("apps.blog.urls")),
-    path("api/portfolio/", include("apps.portfolio.urls")),
-    path("", include("apps.status.urls")),
+    path("api/blog/", include("blog.urls")),
+    path("api/portfolio/", include("portfolio.urls")),
+    path("", include("status.urls")),
     # Site pages
     path("", views.home, name="home"),
     path("about/", views.about, name="about"),
