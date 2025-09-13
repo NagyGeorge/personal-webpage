@@ -17,7 +17,10 @@ DEBUG = os.environ.get("DEBUG", "False").lower() in ["true", "1", "yes", "on"]
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
 
 # CSRF Settings for Django 4.0+
-CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS", "").split(",")
+csrf_origins = os.environ.get("CSRF_TRUSTED_ORIGINS", "")
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip() for origin in csrf_origins.split(",") if origin.strip()
+]
 
 # Application definition
 DJANGO_APPS = [
