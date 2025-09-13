@@ -7,6 +7,7 @@ class Project(models.Model):
     slug = models.SlugField(max_length=200, unique=True, blank=True)
     description = models.TextField()
     link = models.URLField(blank=True, null=True)
+    github_link = models.URLField(blank=True, null=True)
     screenshot = models.ImageField(
         upload_to="portfolio/screenshots/", blank=True, null=True
     )

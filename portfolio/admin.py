@@ -5,7 +5,9 @@ from .models import Project
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ["title", "featured", "created_at"]
+    list_display = ["title", "link", "github_link", "featured", "created_at"]
     list_filter = ["featured", "created_at"]
     search_fields = ["title", "description"]
     date_hierarchy = "created_at"
+    fields = ["title", "description", "link", "github_link", "screenshot", "featured"]
+    readonly_fields = ["slug", "created_at", "updated_at"]
