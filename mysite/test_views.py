@@ -203,7 +203,7 @@ class HTMXViewTests(TestCase):
         """Test regular blog index request returns full page"""
         response = self.client.get(reverse("blog_index"))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "<html>")  # Full page
+        self.assertContains(response, "<!DOCTYPE html>")  # Full page
         self.assertContains(response, "Load More Posts")  # Pagination button
 
     def test_blog_index_htmx_request(self):

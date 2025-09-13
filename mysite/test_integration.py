@@ -80,12 +80,12 @@ class HTMXIntegrationTests(TestCase):
         """Test that HTMX headers are properly detected"""
         # Regular request
         response = self.client.get(reverse("blog_index"))
-        self.assertContains(response, "<html>")  # Full page
+        self.assertContains(response, "<!DOCTYPE html>")  # Full page
 
         # HTMX request
         headers = {"HTTP_HX_REQUEST": "true"}
         response = self.client.get(reverse("blog_index"), **headers)
-        self.assertNotContains(response, "<html>")  # Partial page
+        self.assertNotContains(response, "<!DOCTYPE html>")  # Partial page
 
     @pytest.mark.htmx
     def test_htmx_pagination_post_content(self):
@@ -174,6 +174,11 @@ class TemplateIntegrationTests(TestCase):
     def test_template_conditional_rendering(self):
         """Test conditional rendering in templates"""
         from blog.models import Post
+        from portfolio.models import Project
+
+        # Ensure clean state - delete any existing content
+        Post.objects.all().delete()
+        Project.objects.all().delete()
 
         # Test empty state
         response = self.client.get(reverse("home"))
@@ -229,6 +234,11 @@ class ContactFormIntegrationTests(TestCase):
 
     def test_contact_form_csrf_protection(self):
         """Test that CSRF protection is working"""
+        from django.test import Client
+
+        # Create a new client that enforces CSRF
+        csrf_client = Client(enforce_csrf_checks=True)
+
         form_data = {
             "name": "John Doe",
             "email": "john@example.com",
@@ -237,7 +247,7 @@ class ContactFormIntegrationTests(TestCase):
         }
 
         # Submit without CSRF token should fail
-        response = self.client.post(reverse("contact"), form_data)
+        response = csrf_client.post(reverse("contact"), form_data)
         self.assertEqual(response.status_code, 403)  # CSRF failure
 
     def test_contact_form_honeypot_integration(self):
